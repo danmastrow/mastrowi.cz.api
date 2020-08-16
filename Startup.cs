@@ -1,4 +1,5 @@
 using Mastrowi.cz.Api.Hubs;
+using Mastrowi.cz.Api.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -33,6 +34,8 @@ namespace Mastrowi.cz.Api
             });
             services.AddControllers();
             services.AddSignalR();
+            services.AddMemoryCache();
+            services.AddTransient<IQuizRepository, QuizRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +55,7 @@ namespace Mastrowi.cz.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<RoomHub>("/hub/rooms");
+                endpoints.MapHub<RoomsHub>("/hub/rooms");
             });
         }
     }
